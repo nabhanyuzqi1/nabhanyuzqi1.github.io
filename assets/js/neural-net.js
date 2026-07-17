@@ -130,13 +130,15 @@ function init(canvas) {
     nodeMap[n.id] = group;
   });
 
-  // Create Edges
+  // Create Edges and Data Packets
   const edgeMat = new THREE.LineBasicMaterial({
     color: 0x00ffff,
     transparent: true,
     opacity: 0.15,
     blending: THREE.AdditiveBlending
   });
+  const packetGeo = new THREE.SphereGeometry(0.8, 8, 8);
+  const packetMatTemplate = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
 
   const lines = [];
   validEdges.forEach(e => {
@@ -156,7 +158,12 @@ function init(canvas) {
     const line = new THREE.Line(lineGeo, edgeMat);
     networkGroup.add(line);
     
-    lines.push({ line, v1, v2, startNode, endNode, control });
+    // Create a data packet for this edge
+    const packetMat = packetMatTemplate.clone();
+    const packet = new THREE.Mesh(packetGeo, packetMat);
+    networkGroup.add(packet);
+    
+    lines.push({ line, v1, v2, startNode, endNode, control, packet, progress: Math.random() });
   });
 
   // Background particles (Jarvis Neural Dust)
@@ -270,28 +277,61 @@ function init(canvas) {
       networkGroup.rotation.x += delta * 0.02;
     }
 
-    // Floating animation
+    // Floating animation and Focus States
     nodeMeshes.forEach(group => {
       const ud = group.userData;
       group.position.y = ud.basePos.y + Math.sin(time * 2 + ud.random) * 3;
       
-      // Pulse core if selected
       const isSelected = selected === group;
       const isHovered = hovered === group;
+      
+      // Determine if this node is connected to the selected node
+      let isConnectedToSelected = false;
+      if (selected) {
+        if (isSelected) {
+          isConnectedToSelected = true;
+        } else {
+          for (let l of lines) {
+            if ((l.startNode === selected && l.endNode === group) || 
+                (l.endNode === selected && l.startNode === group)) {
+              isConnectedToSelected = true;
+              break;
+            }
+          }
+        }
+      }
       
       const mesh = group.children[0]; // Outer shell
       const core = group.children[1]; // Inner core
 
-      if (isSelected || isHovered) {
-        mesh.scale.setScalar(1.5);
-        mesh.material.opacity = 0.8;
+      if (selected) {
+        // A node is selected: dim everything not connected
+        if (isConnectedToSelected) {
+          mesh.scale.lerp(new THREE.Vector3(1.5, 1.5, 1.5), 0.1);
+          mesh.material.opacity = isSelected ? 0.9 : 0.6;
+          core.material.transparent = false;
+          core.material.opacity = 1.0;
+        } else {
+          mesh.scale.lerp(new THREE.Vector3(0.5, 0.5, 0.5), 0.1);
+          mesh.material.opacity = 0.05;
+          core.material.transparent = true;
+          core.material.opacity = 0.1;
+        }
       } else {
-        mesh.scale.lerp(new THREE.Vector3(1,1,1), 0.1);
-        mesh.material.opacity = 0.3;
+        // No node is selected: standard hover states
+        if (isHovered) {
+          mesh.scale.setScalar(1.5);
+          mesh.material.opacity = 0.8;
+        } else {
+          mesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
+          mesh.material.opacity = 0.3;
+        }
+        core.material.transparent = false;
+        core.material.opacity = 1.0;
       }
     });
 
-    // Update curved lines
+    // Update curved lines and data packets
     lines.forEach(l => {
       const positions = l.line.geometry.attributes.position.array;
       const curve = new THREE.QuadraticBezierCurve3(l.startNode.position, l.control, l.endNode.position);
@@ -303,18 +343,32 @@ function init(canvas) {
       }
       l.line.geometry.attributes.position.needsUpdate = true;
       
-      // Highlight lines connected to selected
+      // Animate packet
+      l.progress += delta * 0.4;
+      if (l.progress > 1) l.progress = 0;
+      
+      const pt = curve.getPoint(l.progress);
+      l.packet.position.copy(pt);
+      
+      // Highlight lines and packets connected to selected
       if (selected) {
         if (l.startNode === selected || l.endNode === selected) {
           l.line.material.opacity = 0.8;
           l.line.material.color.setHex(0xffffff);
+          l.packet.material.opacity = 1.0;
+          l.packet.scale.setScalar(1.5);
+          l.packet.material.color.setHex(0x00ffff);
         } else {
-          l.line.material.opacity = 0.05;
+          l.line.material.opacity = 0.02; // Heavily dim non-connected lines
           l.line.material.color.setHex(0x00ffff);
+          l.packet.material.opacity = 0; // Hide packets on non-connected lines
         }
       } else {
         l.line.material.opacity = 0.15;
         l.line.material.color.setHex(0x00ffff);
+        l.packet.material.opacity = 0.6;
+        l.packet.scale.setScalar(1.0);
+        l.packet.material.color.setHex(0xffffff);
       }
     });
 
