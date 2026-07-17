@@ -3,14 +3,17 @@
 Cinematic developer portfolio of **Nabhan Yuzqi Al Mubarok** — live at
 [nabhanyuzqi1.github.io](https://nabhanyuzqi1.github.io/).
 
-Static Jekyll site, dark editorial design, GSAP-driven scroll storytelling.
-No servers, no databases, no client build step.
+Static Jekyll site, editorial-dark design, zero animation libraries — a few
+authentic scenes (route board from Sampit, hover-preview work index, Remotion
+showreel) instead of template scroll effects. No servers, no databases.
 
 ## Stack
 
 - **Jekyll** (GitHub Pages whitelisted plugins only: `jekyll-seo-tag`, `jekyll-sitemap`)
-- **GSAP 3 + ScrollTrigger + Lenis** from CDN — motion spec in [docs/Animation-Guide.md](docs/Animation-Guide.md)
-- **Remotion** (`remotion/`) — offline pipeline that renders video assets into `assets/video/`; never part of the Jekyll build
+- **Vanilla JS + CSS motion** (~10 KB) — spec in [docs/Animation-Guide.md](docs/Animation-Guide.md)
+- **Remotion** (`remotion/`) — renders the showreel video from real production
+  screenshots (`sh scripts/render-videos.sh` → `assets/video/showreel.webm`)
+- Fonts: Clash Display + Satoshi (Fontshare), JetBrains Mono
 
 ## Repo map
 

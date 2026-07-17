@@ -1,12 +1,11 @@
 <header class="nav" data-nav>
-  <a class="nav__brand" href="{{ '/' | relative_url }}" aria-label="Home">
-    <span class="nav__mark" aria-hidden="true">N</span>
-    <span class="nav__name">nabhan<span class="nav__accent">.</span>yuzqi</span>
-  </a>
-  <nav class="nav__links" aria-label="Primary">
-    <a class="nav__link" href="{{ '/' | relative_url }}#work">Work</a>
-    <a class="nav__link" href="{{ '/' | relative_url }}#sites">Live</a>
-    <a class="nav__link" href="{{ '/' | relative_url }}#skills">Skills</a>
-    <a class="nav__link nav__link--cta" href="{{ '/' | relative_url }}#contact">Contact</a>
-  </nav>
+  <div class="wrap nav__in">
+    <a class="nav__logo" href="{{ '/' | relative_url }}#top" aria-label="Home">NY<span>.</span></a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="{{ '/' | relative_url }}#work">Work</a>
+      <a href="{{ '/' | relative_url }}#experience">Experience</a>
+      <a href="{{ '/' | relative_url }}#stack">Stack</a>
+      <a class="nav__cta" href="{{ '/cv/Nabhan_Yuzqi_CV.pdf' | relative_url }}" target="_blank" rel="noopener">Download CV</a>
+    </nav>
+  </div>
 </header>

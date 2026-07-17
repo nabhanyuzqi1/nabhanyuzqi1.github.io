@@ -1,0 +1,15 @@
+<section id="experience" class="xp-sec" aria-label="Experience">
+  <div class="wrap">
+    <div class="sec-head rv"><h2>Experience</h2><span class="mono">2022 — Now</span></div>
+    {% for x in site.data.experience.items %}
+    <div class="xp rv">
+      <div class="xp__when mono">{{ x.when }}</div>
+      <div>
+        <h3>{{ x.role }}</h3>
+        <div class="xp__org">{{ x.org }}</div>
+        <p>{{ x.desc }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>

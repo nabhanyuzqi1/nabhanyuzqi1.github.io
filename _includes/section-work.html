@@ -1,32 +1,35 @@
-<section class="work section" id="work" data-scene="s4" aria-label="Featured case studies">
-  <header class="section__head">
-    <p class="section__kicker mono" data-reveal>Selected work</p>
-    <h2 class="section__title" data-split-lines>Case studies</h2>
-    <p class="section__lede" data-reveal>
-      Four products, four different stacks — each one a full story: the problem,
-      the architecture, the trade-offs, and what happened after launch.
-    </p>
-  </header>
+<section id="work" aria-label="Selected work">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Selected Work</h2>
+      <span class="mono">Live &amp; in production</span>
+    </div>
 
-  <div class="work__grid">
-    {% assign featured = site.projects | where: 'featured', true | sort: 'order' %}
-    {% for project in featured %}
-    <a class="work-card" href="{{ project.url | relative_url }}" data-tilt>
-      <div class="work-card__media">
-        <img src="{{ project.cover | relative_url }}" alt="{{ project.title }} cover artwork" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" width="1200" height="675">
-      </div>
-      <div class="work-card__body">
-        <div>
-          <p class="mono">{{ project.category }} · {{ project.year }}</p>
-          <h3 class="work-card__title">{{ project.title }}</h3>
-          <p class="work-card__desc">{{ project.tagline }}</p>
-          <ul class="chips work-card__tags">
-            {% for tech in project.stack limit: 4 %}<li class="chip mono">{{ tech }}</li>{% endfor %}
-          </ul>
+    <div class="work" data-work>
+      {% for w in site.data.work.items %}
+      <div class="row rv" data-row data-img="{{ w.img | relative_url }}">
+        <span class="row__num mono">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+        <div class="row__main">
+          {% if w.url %}
+          <a class="row__link" href="{{ w.url }}" target="_blank" rel="noopener"><h3>{{ w.name }}</h3></a>
+          {% elsif w.case %}
+          <a class="row__link" href="{{ w.case | relative_url }}"><h3>{{ w.name }}</h3></a>
+          {% else %}
+          <h3>{{ w.name }}</h3>
+          {% endif %}
+          <p class="row__desc">{{ w.desc }}</p>
+          <div class="row__meta">
+            {% for t in w.tags %}<span class="tag">{{ t }}</span>{% endfor %}
+            {% if w.case %}<a class="row__case" href="{{ w.case | relative_url }}">Case study →</a>{% endif %}
+          </div>
         </div>
-        <span class="work-card__arrow" aria-hidden="true">→</span>
+        <div class="row__side">
+          {% if w.url %}<a class="row__ext" href="{{ w.url }}" target="_blank" rel="noopener"><span class="mono">{{ w.url_label }}</span> ↗</a>{% endif %}
+        </div>
       </div>
-    </a>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
+
+  <div class="preview" data-preview aria-hidden="true"><img alt="" width="460" height="288"></div>
 </section>

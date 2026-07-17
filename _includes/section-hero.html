@@ -1,44 +1,28 @@
-<section class="hero" data-scene="s1" aria-label="Introduction">
-  <div class="hero__bg" aria-hidden="true">
-    <div class="hero__grid"></div>
-    <canvas class="hero__canvas" data-particles></canvas>
+<header class="hero" id="top">
+  <canvas class="hero__gl" data-hero-gl aria-hidden="true"></canvas>
+  <div class="wrap hero__top">
+    <div class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="mono chip__label">Open to work — Remote / Relocation</span></div>
+    <div class="mono" data-clock>Sampit, ID</div>
   </div>
-
-  <div class="hero__inner">
-    <p class="hero__kicker mono" data-reveal>
-      <span class="hero__status" aria-hidden="true"></span>
-      Sampit, Indonesia — building &amp; available
-    </p>
-
-    <h1 class="hero__title" data-split-lines>
-      <span class="line"><span>Building</span></span>
-      <span class="line"><span><em>production</em></span></span>
-      <span class="line"><span>software.</span></span>
+  <div class="wrap">
+    <h1 class="hero__mega">
+      <span class="line"><span>Nabhan</span></span>
+      <span class="line line--stroke"><span>Yuzqi</span></span>
     </h1>
-
-    <p class="hero__tagline" data-reveal>
-      I'm <strong>Nabhan Yuzqi Al Mubarok</strong> — fullstack developer and founder of
-      PT Tuntas Kilat Group. I design, build, and ship Flutter apps, Next.js platforms,
-      Firebase backends, and IoT systems that real Indonesian businesses run on.
-    </p>
-
-    <div class="hero__actions" data-reveal>
-      <a class="btn btn--primary" data-magnetic href="#work">
-        <span class="btn__label">See the work</span>
-        <span aria-hidden="true">↓</span>
-      </a>
-      <a class="btn btn--ghost" data-magnetic href="#contact">
-        <span class="btn__label">Get in touch</span>
-      </a>
-      <div class="hero__social mono">
-        <a class="link-underline" href="https://github.com/{{ site.github_username }}" target="_blank" rel="me noopener">GitHub</a>
-        <a class="link-underline" href="{{ site.linkedin_url }}" target="_blank" rel="me noopener">LinkedIn</a>
+    <div class="hero__sub">
+      <p><b>Fullstack Developer &amp; Founder.</b> I design, build, and ship production software end-to-end — from a 3-app on-demand service platform in Flutter to Gemini-powered dashboards and live client sites across Indonesia and Australia.</p>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="#work">Selected Work ↓</a>
+        <a class="btn btn--ghost" href="mailto:{{ site.author.email }}">Get in touch</a>
       </div>
     </div>
   </div>
+</header>
 
-  <div class="hero__scroll mono" data-scroll-cue aria-hidden="true">
-    <span>Scroll</span>
-    <span class="hero__scroll-line"></span>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {% for i in (1..2) %}
+    <span>Flutter<i>✦</i></span><span>Next.js<i>✦</i></span><span>Firebase<i>✦</i></span><span>TypeScript<i>✦</i></span><span>Gemini API<i>✦</i></span><span>Django<i>✦</i></span><span>Multi-tenant SaaS<i>✦</i></span><span>IoT<i>✦</i></span>
+    {% endfor %}
   </div>
-</section>
+</div>

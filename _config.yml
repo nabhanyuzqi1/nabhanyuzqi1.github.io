@@ -52,6 +52,7 @@ exclude:
   - remotion
   - prompts
   - docs
+  - scripts
   - checklist
   - Gemfile
   - Gemfile.lock

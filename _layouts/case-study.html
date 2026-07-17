@@ -2,30 +2,30 @@
 layout: default
 ---
 <article class="case">
-  <header class="case-hero section" data-scene="cs-hero">
-    <p class="case-hero__kicker mono" data-reveal>{{ page.category }} · {{ page.year }}</p>
-    <h1 class="case-hero__title" data-split-lines>{{ page.title }}</h1>
-    <p class="case-hero__tagline" data-reveal>{{ page.tagline }}</p>
+  <header class="case-hero wrap" style="max-width:1240px;margin:0 auto;">
+    <p class="case-hero__kicker mono rv">{{ page.category }} · {{ page.year }}</p>
+    <h1 class="case-hero__title rv">{{ page.title }}</h1>
+    <p class="case-hero__tagline rv">{{ page.tagline }}</p>
 
-    <dl class="case-hero__meta" data-reveal-group>
+    <dl class="case-hero__meta rv">
       <div class="case-hero__meta-item">
-        <dt class="mono">Role</dt>
+        <dt>Role</dt>
         <dd>{{ page.role }}</dd>
       </div>
       <div class="case-hero__meta-item">
-        <dt class="mono">Stack</dt>
+        <dt>Stack</dt>
         <dd>
           <ul class="chips">
-            {% for tech in page.stack %}<li class="chip mono">{{ tech }}</li>{% endfor %}
+            {% for tech in page.stack %}<li class="tag">{{ tech }}</li>{% endfor %}
           </ul>
         </dd>
       </div>
       {% if page.links %}
       <div class="case-hero__meta-item">
-        <dt class="mono">Links</dt>
+        <dt>Links</dt>
         <dd class="case-hero__links">
           {% for link in page.links %}
-          <a class="link-underline" href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}</a>
+          <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }} ↗</a>
           {% endfor %}
         </dd>
       </div>
@@ -46,7 +46,7 @@ layout: default
   {% endfor %}
   {% assign next_project = sorted[next_index] %}
   {% if next_project %}
-  <a class="case-next section" href="{{ next_project.url | relative_url }}" data-scene="cs-next">
+  <a class="case-next" href="{{ next_project.url | relative_url }}">
     <p class="mono case-next__label">Next case study</p>
     <p class="case-next__title">{{ next_project.title }} <span class="case-next__arrow" aria-hidden="true">→</span></p>
     <p class="case-next__tagline">{{ next_project.tagline }}</p>

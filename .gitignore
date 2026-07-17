@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Jekyll
+_site/
+.jekyll-cache/
+Gemfile.lock
+vendor/
+
+# Remotion (offline pipeline — only rendered outputs in assets/video/ are committed)
+remotion/node_modules/
+remotion/.remotion/
+node_modules/
+
+# local screenshots staging (copies of assets/img/sites)
+remotion/public/shots/

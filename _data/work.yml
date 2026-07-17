@@ -1,0 +1,54 @@
+# The work index. `case` links to a local case study; `url` is the primary
+# external link (verified live only). `img` powers the hover preview.
+items:
+  - name: Tuntas Kilat
+    desc: On-demand cleaning services platform — 3 Flutter apps (Customer / Crew / Admin), Firebase backend, automated crew matching.
+    tags: [Mobile Platform, Flutter × Firebase]
+    case: /projects/tuntaskilat/
+    url: https://github.com/nabhanyuzqi1/tuntaskilat
+    url_label: GitHub
+    img: /assets/img/covers/tuntaskilat.svg
+  - name: Kontrack
+    desc: Contract & finance management dashboard for contractors, with Gemini-powered document data extraction.
+    tags: [SaaS Dashboard, React × Gemini]
+    case: /projects/kontrack/
+    url: https://kontrack.web.app/
+    url_label: Live
+    img: /assets/img/sites/kontrack.jpg
+  - name: Orah Cafe
+    desc: Cafe website for a Perth Airport venue — menu, SEO, and local-search presence for an Australian client.
+    tags: [F&B · Australia]
+    url: https://orah-cafe-website.web.app
+    url_label: Live
+    img: /assets/img/sites/orah-cafe.jpg
+  - name: Query Roastery
+    desc: Bilingual brand site for a modern coffee roastery in Sampit — motion-led storytelling.
+    tags: [F&B Brand, Next.js]
+    url: https://query-roastery-sampit.web.app/id
+    url_label: Live
+    img: /assets/img/sites/query-roastery.jpg
+  - name: Isu Indonesia
+    desc: National & Kalimantan news portal — high-frequency publishing, SEO architecture, ad-ready layout.
+    tags: [Media Portal]
+    url: https://www.isuindonesia.id
+    url_label: Live
+    img: /assets/img/sites/isu-indonesia.jpg
+  - name: Manob Production
+    desc: Creative studio site spanning four divisions — Record, Pictures, Design, Academy.
+    tags: [Creative Studio]
+    case: /projects/manob/
+    url: https://manobproduction.com
+    url_label: Live
+    img: /assets/img/sites/manob-production.jpg
+  - name: M-Clearance
+    desc: Immigration clearance workflow app for Sampit — submission, verification, and a defensible digital trail.
+    tags: [GovTech, Flutter]
+    case: /projects/m-clearance/
+    url: https://github.com/nabhanyuzqi1/m-clearance-imigrasi
+    url_label: GitHub
+    img: /assets/img/covers/m-clearance.svg
+  - name: IoT Irrigation
+    desc: ESP32 + soil sensors automating irrigation for a 2,000-tree palm oil nursery.
+    tags: [IoT · Hardware]
+    case: /projects/iot-irrigation/
+    img: /assets/img/covers/iot-irrigation.svg

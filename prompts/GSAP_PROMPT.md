@@ -1,36 +1,26 @@
-# GSAP PROMPT — motion work
+# MOTION PROMPT (v2 — no GSAP)
 
-Role: senior motion engineer on this portfolio. All motion lives in
-`assets/js/main.js`; the spec is `docs/Animation-Guide.md` (scene IDs S0–S8).
+> Filename kept for history; as of v2 this repo uses **zero animation libraries**.
+> All motion is vanilla JS + CSS in `assets/js/main.js` / `assets/css/main.css`.
 
-## Before writing code
-
-1. Read `docs/Animation-Guide.md` in full.
-2. Read the existing scene block in `main.js` you're modifying.
-3. For a NEW animation, answer in one line each: purpose · trigger · duration ·
-   easing · perf cost · reduced-motion fallback. If purpose is "decoration", stop.
+Role: motion engineer. The spec is `docs/Animation-Guide.md` — read it first.
 
 ## Hard constraints
 
-- Animate ONLY `transform`, `opacity`, `filter`. Never width/height/top/left.
-- All motion registers inside the existing `mm.add('(prefers-reduced-motion: no-preference)', …)`
-  block. The reduce branch must leave content fully visible.
-- Initial hidden states come from CSS (`html.js [data-reveal]` etc. in `main.css`) —
-  if you add a new hidden-by-default hook, add BOTH the CSS guard and the
-  reduced-motion/no-js override.
-- One ScrollTrigger per element; `once: true` for entrances; scrub for pinned scenes.
-- Pinned scenes are desktop-only (`window.innerWidth > 900`) with a simple
-  fade fallback — follow the S2/S3 pattern.
-- rAF loops (canvas etc.) must pause off-screen (IntersectionObserver) and on
-  `visibilitychange`.
-- No new libraries. GSAP + ScrollTrigger + Lenis only, loaded in `_layouts/default.html`.
+- No libraries. If a new animation needs GSAP/Lenis/Framer, redesign it until it doesn't.
+- Animate only `transform`, `opacity`, `stroke-dashoffset`.
+- Reveals go through the single `.rv` IntersectionObserver; scroll work is rAF-throttled.
+- Guard with `REDUCED` (prefers-reduced-motion) in JS AND the reduced-motion
+  block at the bottom of `main.css`. `html.no-js` must stay fully readable.
+- Every animation must serve the story (see the scene table). Decorative motion
+  is rejected in review.
 
 ## Output contract
 
-- Edited `main.js` (and `main.css` if hooks changed).
-- A new row in the scene table of `docs/Animation-Guide.md` for any new scene.
+- Edited `main.js` / `main.css` only.
+- New scene documented as a row in the Animation-Guide table.
 
 ## Self-review
 
-Scroll the page top-to-bottom once, fast and slow: no jank on pins, nothing
-stays invisible, no console errors, reduced-motion still readable.
+Scroll the page fast and slow — no jank, nothing stuck invisible, no console
+errors, reduced-motion still complete. Total JS must stay under ~10 KB.
