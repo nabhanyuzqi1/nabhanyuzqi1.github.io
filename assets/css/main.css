@@ -106,6 +106,7 @@ html.no-js .rv { opacity: 1; transform: none; }
   justify-content: flex-end;
   padding: 110px 0 clamp(28px, 5vh, 56px);
   position: relative;
+  overflow: clip; /* parallaxed children must never bleed over the marquee */
 }
 .hero::before {
   content: "";
