@@ -87,21 +87,22 @@ function init(canvas) {
   };
 
   // Create Nodes
-  const geo = new THREE.SphereGeometry(3, 32, 32);
-  const coreGeo = new THREE.SphereGeometry(1.5, 16, 16);
+  const geo = new THREE.SphereGeometry(6, 32, 32); // larger outer glow
+  const coreGeo = new THREE.SphereGeometry(2.5, 16, 16); // larger core
 
   NODES.forEach((n, i) => {
-    // Distribute in a 3D spherical/cylindrical layout
-    const layerRadius = n.layer === 'input' ? 120 : (n.layer === 'hidden' ? 60 : 120);
+    // Distribute nodes on the surface of a brain-like ellipsoid
     const theta = (i / NODES.length) * Math.PI * 2;
     const phi = Math.acos((Math.random() * 2) - 1);
     
-    // Make layers separate slightly in Z
-    const zOffset = n.layer === 'input' ? -50 : (n.layer === 'hidden' ? 0 : 50);
-
-    const x = layerRadius * Math.sin(phi) * Math.cos(theta);
-    const y = layerRadius * Math.sin(phi) * Math.sin(theta);
-    const z = layerRadius * Math.cos(phi) + zOffset;
+    let x = 150 * Math.sin(phi) * Math.cos(theta);
+    let y = 90 * Math.sin(phi) * Math.sin(theta);
+    let z = 110 * Math.cos(phi);
+    
+    // Create the longitudinal fissure (split down the middle)
+    if (Math.abs(x) < 20) {
+      x = x < 0 ? x - 20 : x + 20;
+    }
 
     const color = colors[n.layer] || 0x00ffff;
 
@@ -109,11 +110,11 @@ function init(canvas) {
     group.position.set(x, y, z);
     group.userData = { id: n.id, data: n, basePos: new THREE.Vector3(x, y, z), random: Math.random() * 100 };
 
-    // Outer glow shell
+    // Outer glow shell - highly visible
     const mat = new THREE.MeshBasicMaterial({
       color: color,
       transparent: true,
-      opacity: 0.3,
+      opacity: 0.8,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -159,19 +160,31 @@ function init(canvas) {
     lines.push({ line, v1, v2, startNode, endNode, control });
   });
 
-  // Background particles (Jarvis Neural Dust)
+  // Background particles (Structured into a brain shape)
   const dustGeo = new THREE.BufferGeometry();
   const dustCount = REDUCED ? 500 : 3000;
-  const dustPos = new Float32Array(dustCount * 3);
-  for(let i=0; i<dustCount*3; i++) {
-    dustPos[i] = (Math.random() - 0.5) * 600;
+  const dustPos = [];
+  
+  while(dustPos.length < dustCount * 3) {
+    const x = (Math.random() - 0.5) * 320;
+    const y = (Math.random() - 0.5) * 200;
+    const z = (Math.random() - 0.5) * 240;
+    
+    // Brain shape constraint (ellipsoid)
+    if ((x/160)**2 + (y/100)**2 + (z/120)**2 < 1) {
+      // Fissure gap down the X axis
+      if (Math.abs(x) > 15) {
+        dustPos.push(x, y, z);
+      }
+    }
   }
-  dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+  
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(dustPos), 3));
   const dustMat = new THREE.PointsMaterial({
     color: 0x00ffff,
-    size: 1.5,
+    size: 2.0, // increased size slightly
     transparent: true,
-    opacity: 0.4,
+    opacity: 0.5,
     blending: THREE.AdditiveBlending,
     depthWrite: false
   });
