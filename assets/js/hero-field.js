@@ -82,6 +82,7 @@ function init(canvas) {
   if (!window.WebGL2RenderingContext) throw new Error('no webgl2');
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: 'high-performance' });
+  renderer.setClearColor(0x0a0c12, 1); // composer flattens alpha — match the page bg
   const DPR = Math.min(devicePixelRatio || 1, 1.5);
   renderer.setPixelRatio(DPR);
 
@@ -127,10 +128,17 @@ function init(canvas) {
       vec4 p = texture2D(texturePosition, uv);
       vec4 v = texture2D(textureVelocity, uv);
 
-      // flow field: simplex noise decides the drift direction (organic, not random)
-      float n = snoise(vec3(p.xy * 0.035, uTime * 0.06 + p.w * 3.0));
-      float a = n * 6.28318;
-      vec2 flow = vec2(cos(a), sin(a)) * 2.6;
+      // flow field: CURL of simplex noise — divergence-free, so the field
+      // drifts organically but density never collapses into clumps/voids
+      float e = 0.9;
+      vec3 T = vec3(0.0, 0.0, uTime * 0.05);
+      float F = 0.035;
+      float n1 = snoise(vec3((p.xy + vec2(0.0, e)) * F, 0.0) + T);
+      float n2 = snoise(vec3((p.xy - vec2(0.0, e)) * F, 0.0) + T);
+      float n3 = snoise(vec3((p.xy + vec2(e, 0.0)) * F, 0.0) + T);
+      float n4 = snoise(vec3((p.xy - vec2(e, 0.0)) * F, 0.0) + T);
+      vec2 flow = vec2(n1 - n2, -(n3 - n4)) * 42.0;
+      flow = clamp(flow, vec2(-3.2), vec2(3.2));
 
       // gentle pointer attraction
       if (uPointer.z > 0.5) {
@@ -148,7 +156,7 @@ function init(canvas) {
         float radius = age * 22.0;
         vec2 d = p.xy - r.xy;
         float band = abs(length(d) - radius);
-        flow += normalize(d + 0.0001) * smoothstep(5.0, 0.0, band) * 14.0 * r.w;
+        flow += normalize(d + 0.0001) * smoothstep(5.0, 0.0, band) * 7.0 * r.w;
       }
 
       v.xy = mix(v.xy, flow, 0.045);
