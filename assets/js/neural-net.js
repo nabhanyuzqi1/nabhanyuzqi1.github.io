@@ -86,9 +86,25 @@ function init(canvas) {
     output: 0xffaa00
   };
 
+  function createGlowTexture(colorHex) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 128;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    const r = (colorHex >> 16) & 255;
+    const g = (colorHex >> 8) & 255;
+    const b = colorHex & 255;
+    const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gradient.addColorStop(0, `rgba(255,255,255,1)`);
+    gradient.addColorStop(0.2, `rgba(${r},${g},${b},1)`);
+    gradient.addColorStop(0.5, `rgba(${r},${g},${b},0.6)`);
+    gradient.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(canvas);
+  }
+
   // Create Nodes
-  const geo = new THREE.SphereGeometry(6, 32, 32); // larger outer glow
-  const coreGeo = new THREE.SphereGeometry(2.5, 16, 16); // larger core
 
   NODES.forEach((n, i) => {
     // Distribute nodes on the surface of a brain-like ellipsoid
@@ -110,20 +126,23 @@ function init(canvas) {
     group.position.set(x, y, z);
     group.userData = { id: n.id, data: n, basePos: new THREE.Vector3(x, y, z), random: Math.random() * 100 };
 
-    // Outer glow shell - highly visible
-    const mat = new THREE.MeshBasicMaterial({
-      color: color,
+    // Outer glow shell - highly visible Sprite
+    const tex = createGlowTexture(color);
+    const spriteMat = new THREE.SpriteMaterial({
+      map: tex,
+      color: 0xffffff,
       transparent: true,
-      opacity: 0.8,
+      opacity: 1.0,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
-    const mesh = new THREE.Mesh(geo, mat);
-    group.add(mesh);
+    const sprite = new THREE.Sprite(spriteMat);
+    sprite.scale.set(40, 40, 1);
+    group.add(sprite);
 
     // Inner bright core
     const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+    const coreMesh = new THREE.Mesh(new THREE.SphereGeometry(2, 16, 16), coreMat);
     group.add(coreMesh);
 
     networkGroup.add(group);
@@ -135,7 +154,7 @@ function init(canvas) {
   const edgeMat = new THREE.LineBasicMaterial({
     color: 0x00ffff,
     transparent: true,
-    opacity: 0.15,
+    opacity: 0.3,
     blending: THREE.AdditiveBlending
   });
 
@@ -151,13 +170,15 @@ function init(canvas) {
     // Control point pulled towards center
     const control = v1.clone().add(v2).multiplyScalar(0.5).normalize().multiplyScalar(dist * 0.3);
 
-    const curve = new THREE.QuadraticBezierCurve3(v1, control, v2);
-    const points = curve.getPoints(20);
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-    const line = new THREE.Line(lineGeo, edgeMat);
-    networkGroup.add(line);
-    
-    lines.push({ line, v1, v2, startNode, endNode, control });
+    // Create 3 lines per edge for thicker electricity
+    for (let i = 0; i < 3; i++) {
+      const curve = new THREE.QuadraticBezierCurve3(v1, control, v2);
+      const points = curve.getPoints(20);
+      const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+      const line = new THREE.Line(lineGeo, edgeMat);
+      networkGroup.add(line);
+      lines.push({ line, v1, v2, startNode, endNode, control });
+    }
   });
 
   // Background particles (Structured into a brain shape)
@@ -324,31 +345,31 @@ function init(canvas) {
           }
         }
       }
-      
-      const mesh = group.children[0]; // Outer shell
+
+      const sprite = group.children[0];
       const core = group.children[1]; // Inner core
 
       if (selected) {
         // A node is selected: dim everything not connected
         if (isConnectedToSelected) {
-          mesh.scale.lerp(new THREE.Vector3(1.5, 1.5, 1.5), 0.1);
-          mesh.material.opacity = isSelected ? 0.9 : 0.6;
+          sprite.scale.lerp(new THREE.Vector3(60, 60, 1), 0.1);
+          sprite.material.opacity = isSelected ? 1.0 : 0.8;
           core.material.transparent = false;
           core.material.opacity = 1.0;
         } else {
-          mesh.scale.lerp(new THREE.Vector3(0.5, 0.5, 0.5), 0.1);
-          mesh.material.opacity = 0.05;
+          sprite.scale.lerp(new THREE.Vector3(20, 20, 1), 0.1);
+          sprite.material.opacity = 0.05;
           core.material.transparent = true;
           core.material.opacity = 0.1;
         }
       } else {
         // No node is selected: standard hover states
         if (isHovered) {
-          mesh.scale.setScalar(1.5);
-          mesh.material.opacity = 0.8;
+          sprite.scale.set(60, 60, 1);
+          sprite.material.opacity = 1.0;
         } else {
-          mesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
-          mesh.material.opacity = 0.3;
+          sprite.scale.lerp(new THREE.Vector3(40, 40, 1), 0.1);
+          sprite.material.opacity = 0.8;
         }
         core.material.transparent = false;
         core.material.opacity = 1.0;
