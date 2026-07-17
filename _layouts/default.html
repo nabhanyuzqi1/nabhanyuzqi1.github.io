@@ -13,7 +13,6 @@
   {% include footer.html %}
 
   <script defer src="{{ '/assets/js/main.js' | relative_url }}"></script>
-  {% if page.url == "/" or page.url == "/ai/" %}
   <script type="importmap">
   {
     "imports": {
@@ -22,7 +21,6 @@
     }
   }
   </script>
-  {% endif %}
   {% if page.url == "/" %}
   <script type="module" src="{{ '/assets/js/hero-field.js' | relative_url }}"></script>
   {% endif %}
