@@ -5,10 +5,7 @@ const card = document.querySelector('[data-ai-card]');
 const hint = document.querySelector('[data-ai-hint]');
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-if (canvas && !REDUCED) {
-  try { init(canvas); }
-  catch (e) { console.warn('[neural-net] disabled:', e); }
-}
+
 
 /* ---- node data: CV embedded in the network ---- */
 const NODES = [
@@ -590,4 +587,9 @@ function init(canvas) {
   let rsz;
   addEventListener('resize', () => { clearTimeout(rsz); rsz = setTimeout(sizeToViewport, 150); });
   start();
+}
+
+if (canvas && !REDUCED) {
+  try { init(canvas); }
+  catch (e) { console.warn('[neural-net] disabled:', e); }
 }
