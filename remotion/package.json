@@ -1,0 +1,21 @@
+{
+  "name": "portfolio-videos",
+  "private": true,
+  "description": "Offline Remotion pipeline — renders video assets into ../assets/video/. Never part of the Jekyll build.",
+  "scripts": {
+    "studio": "remotion studio",
+    "render:hero": "remotion render HeroLoop ../assets/video/hero.webm --codec=vp8",
+    "render:demo-kontrack": "remotion render ProjectDemo-kontrack ../assets/video/demo-kontrack.webm --codec=vp8",
+    "render:demo-manob": "remotion render ProjectDemo-manob ../assets/video/demo-manob.webm --codec=vp8"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0",
+    "@remotion/cli": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "typescript": "^5.5.0"
+  }
+}

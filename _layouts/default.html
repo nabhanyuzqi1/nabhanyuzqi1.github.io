@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="{{ site.lang }}" class="no-js">
+<head>
+  {% include head.html %}
+</head>
+<body>
+  <div class="preloader" data-preloader aria-hidden="true">
+    <div class="preloader__inner">
+      <span class="preloader__name">NABHAN YUZQI</span>
+      <span class="preloader__count mono" data-preloader-count>0</span>
+    </div>
+  </div>
+
+  <div class="cursor" data-cursor aria-hidden="true">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="glow" data-glow aria-hidden="true"></div>
+
+  {% include nav.html %}
+
+  <main id="main">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script defer src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>

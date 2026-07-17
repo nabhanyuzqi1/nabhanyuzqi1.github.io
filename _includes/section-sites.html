@@ -1,0 +1,44 @@
+<section class="sites section" id="sites" data-scene="s5" aria-label="Live websites">
+  <header class="sites__head section__head">
+    <p class="section__kicker mono" data-reveal>Live on the internet</p>
+    <h2 class="section__title" data-split-lines>Shipped &amp; running</h2>
+    <p class="section__lede" data-reveal>
+      Client and product sites currently in production — every link below was
+      verified live before this page shipped.
+    </p>
+  </header>
+
+  <div class="sites__row" data-sites-row="1">
+    {% for s in site.data.sites.row1 %}
+    <a class="site-card" href="{{ s.url }}" target="_blank" rel="noopener">
+      <div class="site-card__media">
+        <img src="{{ s.img | relative_url }}" alt="Screenshot of {{ s.name }}" loading="lazy" width="920" height="575">
+      </div>
+      <div class="site-card__body">
+        <div>
+          <p class="site-card__name">{{ s.name }}</p>
+          <p class="site-card__url mono">{{ s.display_url }}</p>
+        </div>
+        <span class="chip mono">{{ s.category }}</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="sites__row" data-sites-row="2">
+    {% for s in site.data.sites.row2 %}
+    <a class="site-card" href="{{ s.url }}" target="_blank" rel="noopener">
+      <div class="site-card__media">
+        <img src="{{ s.img | relative_url }}" alt="Screenshot of {{ s.name }}" loading="lazy" width="920" height="575">
+      </div>
+      <div class="site-card__body">
+        <div>
+          <p class="site-card__name">{{ s.name }}</p>
+          <p class="site-card__url mono">{{ s.display_url }}</p>
+        </div>
+        <span class="chip mono">{{ s.category }}</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>

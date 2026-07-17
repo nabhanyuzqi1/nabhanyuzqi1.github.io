@@ -1,0 +1,27 @@
+items:
+  - year: "Now"
+    role: Founder & Fullstack Developer
+    org: PT Tuntas Kilat Group — Sampit, Indonesia
+    desc: >-
+      Building and operating the company's products end-to-end — Tuntaskilat
+      (on-demand cleaning platform, 3 Flutter apps on Firebase) and Tekka Cafe OS
+      (multi-tenant POS SaaS) — plus client platforms for cafes, media, and agencies.
+  - year: "2026"
+    role: B.S. Information Systems
+    org: Universitas Darwan Ali
+    desc: >-
+      Thesis passed examination — "Tuntas Kilat: an on-demand cleaning platform
+      built with Flutter & Firebase using Human-Centered Design", including
+      black-box testing and production security rules.
+  - year: "2023"
+    role: Bangkit Academy — led by Google
+    org: Capstone C23-PS321
+    desc: >-
+      Google's intensive tech talent program. Built and shipped a capstone
+      product with a cross-functional team on Android + machine learning.
+  - year: "2022"
+    role: First production work
+    org: Freelance & campus projects
+    desc: >-
+      Early client work and applied ML — web platforms, data classification and
+      feature-engineering projects in Python that turned coursework into shipped code.

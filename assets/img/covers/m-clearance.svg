@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="ui-monospace,monospace">
+  <defs>
+    <radialGradient id="m1" cx="80%" cy="80%" r="70%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="m2" cx="15%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#ffb454" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#ffb454" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="gridm" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#f4f4f5" stroke-opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#0c0c10"/>
+  <rect width="1200" height="675" fill="url(#m1)"/>
+  <rect width="1200" height="675" fill="url(#m2)"/>
+  <rect width="1200" height="675" fill="url(#gridm)"/>
+  <!-- passport stamp -->
+  <g transform="rotate(-12 950 190)" stroke="#38bdf8" fill="none">
+    <rect x="820" y="110" width="260" height="160" rx="16" stroke-width="3" stroke-opacity="0.8"/>
+    <rect x="838" y="128" width="224" height="124" rx="10" stroke-dasharray="5 6" stroke-opacity="0.6"/>
+    <text x="950" y="185" font-size="26" fill="#38bdf8" text-anchor="middle" letter-spacing="4" stroke="none">CLEARED</text>
+    <text x="950" y="218" font-size="14" fill="#9a9aa3" text-anchor="middle" letter-spacing="3" stroke="none">IMIGRASI · SAMPIT</text>
+  </g>
+  <text x="80" y="360" font-size="150" font-weight="700" fill="none" stroke="#f4f4f5" stroke-opacity="0.85" letter-spacing="-4" font-family="'Space Grotesk',sans-serif">M-CLEAR</text>
+  <text x="80" y="500" font-size="150" font-weight="700" fill="#38bdf8" letter-spacing="-4" font-family="'Space Grotesk',sans-serif">ANCE</text>
+  <text x="82" y="560" font-size="22" fill="#9a9aa3" letter-spacing="6">PAPER WORKFLOW → DIGITAL CLEARANCE · FLUTTER + FIREBASE</text>
+</svg>

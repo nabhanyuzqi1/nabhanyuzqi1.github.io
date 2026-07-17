@@ -1,0 +1,61 @@
+# Site
+title: Nabhan Yuzqi Al Mubarok
+tagline: Fullstack Developer — Flutter · Next.js · Firebase
+description: >-
+  Fullstack developer and founder of PT Tuntas Kilat Group building production
+  software for Indonesian SMEs — Flutter apps, Next.js platforms, Firebase
+  backends, and IoT systems. Based in Sampit, Indonesia.
+url: "https://nabhanyuzqi1.github.io"
+baseurl: ""
+lang: en
+timezone: Asia/Jakarta
+
+author:
+  name: Nabhan Yuzqi Al Mubarok
+  email: nabhanyuzqi1@gmail.com
+
+social:
+  name: Nabhan Yuzqi Al Mubarok
+  links:
+    - https://github.com/nabhanyuzqi1
+    - https://www.linkedin.com/in/nabhanyuzqi
+
+github_username: nabhanyuzqi1
+linkedin_url: https://www.linkedin.com/in/nabhanyuzqi
+
+# Build
+markdown: kramdown
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: case-study
+  - scope:
+      path: ""
+    values:
+      image: /assets/img/og-image.png
+
+sass:
+  style: compressed
+
+exclude:
+  - remotion
+  - prompts
+  - docs
+  - checklist
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - assets/images-needed.md
+  - vendor
+  - node_modules

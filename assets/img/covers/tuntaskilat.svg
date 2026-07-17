@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="ui-monospace,monospace">
+  <defs>
+    <radialGradient id="g1" cx="75%" cy="20%" r="70%">
+      <stop offset="0%" stop-color="#0A874D" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0A874D" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="15%" cy="90%" r="60%">
+      <stop offset="0%" stop-color="#FBCC14" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#FBCC14" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid1" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#f4f4f5" stroke-opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#0c0c10"/>
+  <rect width="1200" height="675" fill="url(#g1)"/>
+  <rect width="1200" height="675" fill="url(#g2)"/>
+  <rect width="1200" height="675" fill="url(#grid1)"/>
+  <g stroke="#0A874D" stroke-opacity="0.5" fill="none">
+    <circle cx="920" cy="200" r="130"/>
+    <circle cx="920" cy="200" r="90" stroke-dasharray="6 8"/>
+    <circle cx="920" cy="200" r="45" stroke-opacity="0.9"/>
+  </g>
+  <g fill="#4ade80"><circle cx="920" cy="70" r="5"/><circle cx="1050" cy="200" r="5"/><circle cx="830" cy="300" r="5"/></g>
+  <text x="80" y="360" font-size="150" font-weight="700" fill="none" stroke="#f4f4f5" stroke-opacity="0.85" letter-spacing="-4" font-family="'Space Grotesk',sans-serif">TUNTAS</text>
+  <text x="80" y="500" font-size="150" font-weight="700" fill="#FBCC14" letter-spacing="-4" font-family="'Space Grotesk',sans-serif">KILAT</text>
+  <text x="82" y="560" font-size="22" fill="#9a9aa3" letter-spacing="6">3 FLUTTER APPS · 1 FIREBASE BACKEND · 0 SERVERS</text>
+</svg>

@@ -1,0 +1,42 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#060608">
+<meta name="color-scheme" content="dark">
+
+{% seo %}
+
+<link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
+<script>document.documentElement.classList.replace('no-js', 'js');</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Nabhan Yuzqi Al Mubarok",
+  "url": "{{ site.url }}",
+  "email": "mailto:{{ site.author.email }}",
+  "jobTitle": "Fullstack Developer",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "PT Tuntas Kilat Group"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Sampit",
+    "addressCountry": "ID"
+  },
+  "alumniOf": "Bangkit Academy (Google)",
+  "knowsAbout": ["Flutter", "Dart", "Next.js", "TypeScript", "Firebase", "Google Cloud", "IoT", "Gemini API"],
+  "sameAs": [
+    "https://github.com/{{ site.github_username }}",
+    "{{ site.linkedin_url }}"
+  ]
+}
+</script>

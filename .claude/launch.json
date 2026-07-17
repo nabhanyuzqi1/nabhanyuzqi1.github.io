@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "jekyll",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "(bundle check || bundle install) && bundle exec jekyll serve --port 4000 --host 127.0.0.1"
+      ],
+      "port": 4000
+    }
+  ]
+}

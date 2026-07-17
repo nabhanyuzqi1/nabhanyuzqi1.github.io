@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="ui-monospace,monospace">
+  <defs>
+    <radialGradient id="mb1" cx="25%" cy="20%" r="70%">
+      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="gridmb" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#f4f4f5" stroke-opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#0c0c10"/>
+  <rect width="1200" height="675" fill="url(#mb1)"/>
+  <rect width="1200" height="675" fill="url(#gridmb)"/>
+  <!-- clapperboard -->
+  <g transform="rotate(-8 950 180)">
+    <rect x="850" y="150" width="200" height="130" rx="10" fill="#131318" stroke="#f43f5e" stroke-opacity="0.7"/>
+    <rect x="850" y="110" width="200" height="40" rx="10" fill="#131318" stroke="#f43f5e" stroke-opacity="0.7"/>
+    <g fill="#f43f5e" fill-opacity="0.7">
+      <polygon points="860,110 890,110 875,150 845,150"/>
+      <polygon points="920,110 950,110 935,150 905,150"/>
+      <polygon points="980,110 1010,110 995,150 965,150"/>
+    </g>
+    <text x="950" y="205" font-size="18" fill="#f4f4f5" text-anchor="middle" letter-spacing="4">MANOB</text>
+    <text x="950" y="235" font-size="12" fill="#9a9aa3" text-anchor="middle" letter-spacing="3">SCENE 01 · TAKE 01</text>
+  </g>
+  <text x="80" y="360" font-size="150" font-weight="700" fill="none" stroke="#f4f4f5" stroke-opacity="0.85" letter-spacing="-4" font-family="'Space Grotesk',sans-serif">MANOB</text>
+  <text x="80" y="500" font-size="150" font-weight="700" fill="#f43f5e" letter-spacing="-4" font-family="'Space Grotesk',sans-serif">PROD.</text>
+  <text x="82" y="560" font-size="22" fill="#9a9aa3" letter-spacing="6">AGENCY SITE · ACADEMY APP · KOTLIN MULTIPLATFORM</text>
+</svg>

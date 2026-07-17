@@ -1,0 +1,22 @@
+<section class="section" id="experience" data-scene="s7" aria-label="Experience">
+  <header class="section__head">
+    <p class="section__kicker mono" data-reveal>The road here</p>
+    <h2 class="section__title" data-split-lines>Experience</h2>
+  </header>
+
+  <div class="timeline">
+    <div class="timeline__line" aria-hidden="true">
+      <div class="timeline__line-fill" data-timeline-fill></div>
+    </div>
+    <div class="timeline__items">
+      {% for item in site.data.experience.items %}
+      <article class="timeline__item">
+        <p class="timeline__year mono">{{ item.year }}</p>
+        <h3 class="timeline__role">{{ item.role }}</h3>
+        <p class="timeline__org">{{ item.org }}</p>
+        <p class="timeline__desc">{{ item.desc }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

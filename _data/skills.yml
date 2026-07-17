@@ -1,0 +1,11 @@
+groups:
+  - name: Mobile
+    items: [Flutter, Dart, Firebase Auth, FCM]
+  - name: Web
+    items: [Next.js, React, TypeScript, Tailwind CSS]
+  - name: Backend & Cloud
+    items: [Firebase, Firestore, Cloud Functions, Google Cloud, Node.js]
+  - name: AI & Data
+    items: [Gemini API, Claude API, Python, scikit-learn]
+  - name: Hardware & Tools
+    items: [ESP32 / IoT, Git & GitHub, Figma, GSAP]
