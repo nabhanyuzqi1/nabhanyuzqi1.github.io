@@ -130,15 +130,13 @@ function init(canvas) {
     nodeMap[n.id] = group;
   });
 
-  // Create Edges and Data Packets
+  // Create Edges
   const edgeMat = new THREE.LineBasicMaterial({
     color: 0x00ffff,
     transparent: true,
     opacity: 0.15,
     blending: THREE.AdditiveBlending
   });
-  const packetGeo = new THREE.SphereGeometry(0.8, 8, 8);
-  const packetMatTemplate = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
 
   const lines = [];
   validEdges.forEach(e => {
@@ -158,12 +156,7 @@ function init(canvas) {
     const line = new THREE.Line(lineGeo, edgeMat);
     networkGroup.add(line);
     
-    // Create a data packet for this edge
-    const packetMat = packetMatTemplate.clone();
-    const packet = new THREE.Mesh(packetGeo, packetMat);
-    networkGroup.add(packet);
-    
-    lines.push({ line, v1, v2, startNode, endNode, control, packet, progress: Math.random() });
+    lines.push({ line, v1, v2, startNode, endNode, control });
   });
 
   // Background particles (Jarvis Neural Dust)
@@ -191,6 +184,10 @@ function init(canvas) {
   let hovered = null;
   let selected = null;
   let targetOrbit = new THREE.Vector3(0, 0, 0);
+  
+  let targetCameraPos = new THREE.Vector3();
+  let animatingCamera = false;
+  const baseCameraPos = new THREE.Vector3(0, 30, 200);
 
   window.addEventListener('mousemove', e => {
     mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -201,13 +198,18 @@ function init(canvas) {
     if (hovered) {
       selected = hovered;
       showCard(selected.userData.data);
-      // Pan camera slightly
+      // Pan camera slightly closer to node
       targetOrbit.copy(selected.position);
+      const offset = new THREE.Vector3(20, 10, 80);
+      targetCameraPos.copy(selected.position).add(offset);
+      animatingCamera = true;
       if (hint) hint.style.display = 'none';
     } else {
       selected = null;
       hideCard();
       targetOrbit.set(0,0,0);
+      targetCameraPos.copy(baseCameraPos);
+      animatingCamera = true;
     }
   });
 
@@ -268,8 +270,17 @@ function init(canvas) {
     const delta = clock.getDelta();
     const time = clock.getElapsedTime();
 
-    controls.target.lerp(targetOrbit, 0.05);
-    controls.update();
+    if (animatingCamera) {
+      camera.position.lerp(targetCameraPos, 0.04);
+      controls.target.lerp(targetOrbit, 0.04);
+      camera.lookAt(controls.target);
+      if (camera.position.distanceTo(targetCameraPos) < 1.5 && controls.target.distanceTo(targetOrbit) < 1.5) {
+        animatingCamera = false;
+      }
+    } else {
+      controls.target.lerp(targetOrbit, 0.05);
+      controls.update();
+    }
 
     // Rotate network slowly
     if (!selected) {
@@ -331,44 +342,50 @@ function init(canvas) {
       }
     });
 
-    // Update curved lines and data packets
+    // Update curved lines as electricity
     lines.forEach(l => {
       const positions = l.line.geometry.attributes.position.array;
       const curve = new THREE.QuadraticBezierCurve3(l.startNode.position, l.control, l.endNode.position);
       const points = curve.getPoints(20);
+      
+      let isHighlighted = false;
+      let isDimmed = false;
+      if (selected) {
+        if (l.startNode === selected || l.endNode === selected) {
+          isHighlighted = true;
+        } else {
+          isDimmed = true;
+        }
+      }
+      
+      const jitterAmount = isHighlighted ? 4.0 : 1.5;
+      
       for(let i=0; i<points.length; i++){
-        positions[i*3] = points[i].x;
-        positions[i*3+1] = points[i].y;
-        positions[i*3+2] = points[i].z;
+        let offset = new THREE.Vector3(0,0,0);
+        // Add random electric jitter to inner points
+        if (i > 0 && i < points.length - 1 && time % 0.1 > 0.02) {
+          offset.set(
+            (Math.random() - 0.5) * jitterAmount,
+            (Math.random() - 0.5) * jitterAmount,
+            (Math.random() - 0.5) * jitterAmount
+          );
+        }
+        positions[i*3] = points[i].x + offset.x;
+        positions[i*3+1] = points[i].y + offset.y;
+        positions[i*3+2] = points[i].z + offset.z;
       }
       l.line.geometry.attributes.position.needsUpdate = true;
       
-      // Animate packet
-      l.progress += delta * 0.4;
-      if (l.progress > 1) l.progress = 0;
-      
-      const pt = curve.getPoint(l.progress);
-      l.packet.position.copy(pt);
-      
-      // Highlight lines and packets connected to selected
-      if (selected) {
-        if (l.startNode === selected || l.endNode === selected) {
-          l.line.material.opacity = 0.8;
-          l.line.material.color.setHex(0xffffff);
-          l.packet.material.opacity = 1.0;
-          l.packet.scale.setScalar(1.5);
-          l.packet.material.color.setHex(0x00ffff);
-        } else {
-          l.line.material.opacity = 0.02; // Heavily dim non-connected lines
-          l.line.material.color.setHex(0x00ffff);
-          l.packet.material.opacity = 0; // Hide packets on non-connected lines
-        }
-      } else {
-        l.line.material.opacity = 0.15;
+      // Highlight electric arcs connected to selected
+      if (isHighlighted) {
+        l.line.material.opacity = 0.9;
+        l.line.material.color.setHex(0xffffff); // Bright white arc
+      } else if (isDimmed) {
+        l.line.material.opacity = 0.02; // Heavily dim non-connected lines
         l.line.material.color.setHex(0x00ffff);
-        l.packet.material.opacity = 0.6;
-        l.packet.scale.setScalar(1.0);
-        l.packet.material.color.setHex(0xffffff);
+      } else {
+        l.line.material.opacity = 0.3;
+        l.line.material.color.setHex(0x00ffff);
       }
     });
 
