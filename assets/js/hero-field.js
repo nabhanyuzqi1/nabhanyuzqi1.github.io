@@ -251,34 +251,6 @@ function init(canvas) {
   });
   scene.add(new THREE.Points(geo, mat));
 
-  // ---- 3D orbit of project cards (real production screenshots) ----
-  const isMobile = innerWidth < 700;
-  const cardsGroup = new THREE.Group();
-  cardsGroup.rotation.x = -0.22;
-  cardsGroup.rotation.z = 0.1;
-  scene.add(cardsGroup);
-  const CARD_SRCS = [
-    '/assets/img/sites/orah-cafe.jpg',
-    '/assets/img/sites/kontrack.jpg',
-    '/assets/img/sites/query-roastery.jpg',
-    '/assets/img/sites/isu-indonesia.jpg',
-    '/assets/img/sites/manob-production.jpg',
-  ];
-  const cardW = isMobile ? 9 : 15;
-  const texLoader = new THREE.TextureLoader();
-  CARD_SRCS.forEach(function (src, i) {
-    texLoader.load(src, function (tex) {
-      tex.colorSpace = THREE.SRGBColorSpace;
-      const card = new THREE.Mesh(
-        new THREE.PlaneGeometry(cardW, cardW * 0.625),
-        // dimmed below the bloom threshold — screenshots must not glow
-        new THREE.MeshBasicMaterial({ map: tex, color: new THREE.Color().setScalar(0.72) })
-      );
-      card.userData.i = i;
-      cardsGroup.add(card);
-    });
-  });
-
   // ---- selective bloom: high threshold, only excited particles pass ----
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
@@ -324,23 +296,6 @@ function init(canvas) {
     shared.uTime.value += Math.min(clock.getDelta(), 0.05) * 1.0;
     gpu.compute();
     mat.uniforms.uPositions.value = gpu.getCurrentRenderTarget(posVar).texture;
-
-    // orbit cards: enter sliding from the right, then ride scroll down-left
-    const t = shared.uTime.value;
-    const k = Math.min(scrollY / innerHeight, 1);
-    const enter = 1 - Math.pow(1 - Math.min(t / 1.8, 1), 3);
-    cardsGroup.position.x = fieldW * (isMobile ? 0 : 0.26) + (1 - enter) * 70 - k * fieldW * 0.6;
-    cardsGroup.position.y = (isMobile ? fieldH * 0.22 : 3) - k * fieldH * 0.55;
-    const rx = isMobile ? 12 : 21, rz = 12;
-    cardsGroup.children.forEach(function (c) {
-      const th = c.userData.i * (Math.PI * 2 / CARD_SRCS.length) + t * 0.22;
-      c.position.set(Math.cos(th) * rx, Math.sin(t * 0.7 + c.userData.i * 1.7) * 1.1, Math.sin(th) * rz);
-      c.quaternion.copy(camera.quaternion); // billboard: screenshots stay readable
-      c.rotation.z += Math.sin(t * 0.5 + c.userData.i) * 0.05;
-      const depth = (Math.sin(th) + 1) / 2; // back cards dim slightly
-      c.material.color.setScalar(0.5 + depth * 0.24);
-    });
-
     composer.render();
     raf = requestAnimationFrame(tick);
   };

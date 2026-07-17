@@ -4,7 +4,13 @@
       <h2>Selected Work</h2>
       <span class="mono">Live &amp; in production</span>
     </div>
+  </div>
 
+  <div class="work-orbit" aria-hidden="true">
+    <canvas data-orbit-gl></canvas>
+  </div>
+
+  <div class="wrap">
     <div class="work" data-work>
       {% for w in site.data.work.items %}
       <div class="row rv" data-row data-img="{{ w.img | relative_url }}">

@@ -10,10 +10,10 @@ mkdir -p "$OUT"
 shot() { # name url
   echo "→ $1"
   "$CHROME" --headless=new --disable-gpu --hide-scrollbars \
-    --window-size=1280,800 --virtual-time-budget=15000 \
+    --window-size=1600,1000 --virtual-time-budget=15000 \
     --screenshot="$OUT/$1.png" "$2" >/dev/null 2>&1
   # convert to compressed jpg at card resolution, drop the png
-  sips -s format jpeg -s formatOptions 82 -Z 1024 "$OUT/$1.png" --out "$OUT/$1.jpg" >/dev/null
+  sips -s format jpeg -s formatOptions 82 -Z 1600 "$OUT/$1.png" --out "$OUT/$1.jpg" >/dev/null
   rm "$OUT/$1.png"
 }
 

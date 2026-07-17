@@ -285,6 +285,16 @@ html.no-js .rv { opacity: 1; transform: none; }
   color: var(--ink);
 }
 
+/* ---------- work orbit band ---------- */
+.work-orbit {
+  height: clamp(300px, 46vh, 460px);
+  margin: 8px 0 24px;
+  overflow: clip;
+}
+.work-orbit canvas { width: 100%; height: 100%; display: block; }
+html.no-js .work-orbit { display: none; }
+@media (prefers-reduced-motion: reduce) { .work-orbit { display: none; } }
+
 /* ---------- work index ---------- */
 .row {
   display: grid;
