@@ -59,7 +59,7 @@ function init(canvas) {
   scene.fog = new THREE.FogExp2(0x02040a, 0.003);
 
   const camera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
-  camera.position.set(0, 30, 200);
+  camera.position.set(0, 30, 800);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -95,9 +95,9 @@ function init(canvas) {
     const g = (colorHex >> 8) & 255;
     const b = colorHex & 255;
     const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-    gradient.addColorStop(0, `rgba(255,255,255,1)`);
-    gradient.addColorStop(0.2, `rgba(${r},${g},${b},1)`);
-    gradient.addColorStop(0.5, `rgba(${r},${g},${b},0.6)`);
+    gradient.addColorStop(0, `rgba(255,255,255,0.8)`);
+    gradient.addColorStop(0.2, `rgba(${r},${g},${b},0.8)`);
+    gradient.addColorStop(0.5, `rgba(${r},${g},${b},0.3)`);
     gradient.addColorStop(1, `rgba(${r},${g},${b},0)`);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 128, 128);
@@ -137,7 +137,7 @@ function init(canvas) {
       depthWrite: false
     });
     const sprite = new THREE.Sprite(spriteMat);
-    sprite.scale.set(40, 40, 1);
+    sprite.scale.set(20, 20, 1);
     group.add(sprite);
 
     // Inner bright core
@@ -222,6 +222,10 @@ function init(canvas) {
   let targetCameraPos = new THREE.Vector3();
   let animatingCamera = false;
   const baseCameraPos = new THREE.Vector3(0, 30, 200);
+  
+  let introAnimating = true;
+  let introProgress = 0;
+  const introStartPos = new THREE.Vector3(0, 30, 800);
 
   window.addEventListener('mousemove', e => {
     mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -229,6 +233,11 @@ function init(canvas) {
   });
 
   window.addEventListener('click', () => {
+    if (introAnimating) {
+      introAnimating = false;
+      dustMat.opacity = 0.05;
+      camera.position.copy(baseCameraPos);
+    }
     if (hovered) {
       selected = hovered;
       showCard(selected.userData.data);
@@ -304,7 +313,19 @@ function init(canvas) {
     const delta = clock.getDelta();
     const time = clock.getElapsedTime();
 
-    if (animatingCamera) {
+    if (introAnimating) {
+      introProgress += delta * 0.4;
+      if (introProgress >= 1) {
+        introProgress = 1;
+        introAnimating = false;
+        camera.position.copy(baseCameraPos);
+      } else {
+        const ease = 1 - Math.pow(1 - introProgress, 3);
+        camera.position.lerpVectors(introStartPos, baseCameraPos, ease);
+        dustMat.opacity = 0.5 * (1 - ease) + 0.05 * ease;
+      }
+      controls.update();
+    } else if (animatingCamera) {
       camera.position.lerp(targetCameraPos, 0.04);
       controls.target.lerp(targetOrbit, 0.04);
       camera.lookAt(controls.target);
@@ -352,12 +373,12 @@ function init(canvas) {
       if (selected) {
         // A node is selected: dim everything not connected
         if (isConnectedToSelected) {
-          sprite.scale.lerp(new THREE.Vector3(60, 60, 1), 0.1);
+          sprite.scale.lerp(new THREE.Vector3(30, 30, 1), 0.1);
           sprite.material.opacity = isSelected ? 1.0 : 0.8;
           core.material.transparent = false;
           core.material.opacity = 1.0;
         } else {
-          sprite.scale.lerp(new THREE.Vector3(20, 20, 1), 0.1);
+          sprite.scale.lerp(new THREE.Vector3(10, 10, 1), 0.1);
           sprite.material.opacity = 0.05;
           core.material.transparent = true;
           core.material.opacity = 0.1;
@@ -365,10 +386,10 @@ function init(canvas) {
       } else {
         // No node is selected: standard hover states
         if (isHovered) {
-          sprite.scale.set(60, 60, 1);
+          sprite.scale.set(30, 30, 1);
           sprite.material.opacity = 1.0;
         } else {
-          sprite.scale.lerp(new THREE.Vector3(40, 40, 1), 0.1);
+          sprite.scale.lerp(new THREE.Vector3(20, 20, 1), 0.1);
           sprite.material.opacity = 0.8;
         }
         core.material.transparent = false;
