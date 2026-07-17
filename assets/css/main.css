@@ -122,7 +122,8 @@ html.no-js .rv { opacity: 1; transform: none; }
   height: 100%;
   z-index: 0;
 }
-.hero > .wrap { position: relative; z-index: 1; }
+/* flex items with auto side-margins shrink-to-fit — force full width */
+.hero > .wrap { position: relative; z-index: 1; width: 100%; }
 
 .hero__top {
   display: flex;
