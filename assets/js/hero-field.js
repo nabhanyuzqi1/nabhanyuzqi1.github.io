@@ -89,7 +89,7 @@ function init(canvas) {
   const camera = new THREE.PerspectiveCamera(50, 1, 1, 300);
   camera.position.z = 90;
 
-  const SIM = innerWidth < 700 ? 128 : 224; // 16k phone · 50k desktop
+  const SIM = innerWidth < 700 ? 112 : 176; // 12.5k phone · 31k desktop
   const COUNT = SIM * SIM;
   const gpu = new GPUComputationRenderer(SIM, SIM, renderer);
 
@@ -223,7 +223,7 @@ function init(canvas) {
         vGlow = ringGlow(p.xy, uTime);
         vec4 mv = modelViewMatrix * vec4(p.xyz, 1.0);
         gl_Position = projectionMatrix * mv;
-        gl_PointSize = (1.1 + vSeed * 1.3 + vGlow * 2.4) * uDpr * (120.0 / -mv.z);
+        gl_PointSize = (1.0 + vSeed * 1.1 + vGlow * 1.5) * uDpr * (120.0 / -mv.z);
       }`,
     fragmentShader: /* glsl */ `
       varying float vGlow;
@@ -234,10 +234,10 @@ function init(canvas) {
         float soft = smoothstep(0.5, 0.05, d);
         // base: dim indigo dust (below bloom threshold)
         vec3 base = mix(vec3(0.545, 0.616, 1.0), vec3(0.961, 0.773, 0.42), step(0.965, vSeed));
-        float alpha = (0.10 + vSeed * 0.10) * soft;
+        float alpha = (0.045 + vSeed * 0.055) * soft;
         // ring-excited particles get pushed over the bloom threshold → they glow
-        vec3 col = base * (0.55 + vGlow * 3.2);
-        alpha += vGlow * 0.5 * soft;
+        vec3 col = base * (0.5 + vGlow * 1.7);
+        alpha += vGlow * 0.28 * soft;
         gl_FragColor = vec4(col, alpha);
       }`,
   });
@@ -246,7 +246,7 @@ function init(canvas) {
   // ---- selective bloom: high threshold, only excited particles pass ----
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.9, 0.65, 0.62);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.45, 0.68);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
@@ -273,10 +273,10 @@ function init(canvas) {
   hero.addEventListener('pointerdown', (e) => {
     if (e.target.closest('a, button')) return;
     const [x, y] = toWorld(e.clientX, e.clientY);
-    pulse(x, y, 1);
+    pulse(x, y, 0.7);
   });
   // idle heartbeat from the origin every ~4s so the scene breathes untouched
-  setInterval(() => { if (running) pulse(0, -6, 0.35); }, 4200);
+  setInterval(() => { if (running) pulse(fieldW * 0.28, -fieldH * 0.3, 0.16); }, 6000);
   // audio hook: wire an AnalyserNode beat detector to this for track-reactive rings
   window.__heroRingPulse = (s) => pulse(0, -6, Math.max(0, Math.min(1, s)));
 
