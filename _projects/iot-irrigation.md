@@ -59,10 +59,12 @@ see the whole field's condition remotely instead of guessing.
   <text class="d-label" x="690" y="176">Dashboard</text>
   <text class="d-sub" x="690" y="194">remote monitor</text>
 
-  <path class="d-line d-flow" d="M170 95 H250" marker-end="url(#arrow-io)"/>
+  <path class="d-line" d="M170 95 H250" marker-end="url(#arrow-io)"/>
   <path class="d-line" d="M400 80 H480" marker-end="url(#arrow-io)"/>
   <path class="d-line" d="M400 170 H480" marker-end="url(#arrow-io)"/>
   <path class="d-line" d="M610 180 H640" marker-end="url(#arrow-io)"/>
+  <!-- composite flow: Sensors → ESP32 → Cloud → Dashboard -->
+  <path class="d-flow" d="M170 95 H325 V170 H545 V180 H690" fill="none" stroke="none"/>
   <circle class="d-dot" cx="170" cy="95" r="5"/>
 </svg>
 </div>

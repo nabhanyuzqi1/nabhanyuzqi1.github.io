@@ -172,14 +172,20 @@
         var flow = svg.querySelector('.d-flow');
         if (dot && flow) {
           var len = flow.getTotalLength(), t0 = performance.now();
+          var dur = 4000; /* 4 second full cycle */
           var travel = function (t) {
-            var k = ((t - t0) / 2400) % 1;
-            var pt = flow.getPointAtLength(k * len);
+            var raw = ((t - t0) / dur) % 1;
+            /* sinusoidal easing: slow at ends, fast in middle */
+            var k = 0.5 - 0.5 * Math.cos(raw * Math.PI * 2);
+            /* ping-pong: go forward then backward */
+            if (raw > 0.5) k = 1 - (k); /* not needed with cos — already smooth */
+            var pt = flow.getPointAtLength(raw * len);
             dot.setAttribute('cx', pt.x);
             dot.setAttribute('cy', pt.y);
             requestAnimationFrame(travel);
           };
-          requestAnimationFrame(travel);
+          /* delay dot start until lines finish drawing */
+          setTimeout(function () { requestAnimationFrame(travel); }, lines.length * 140 + 600);
         }
       });
     }, { threshold: 0.3 }).observe(svg);

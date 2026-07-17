@@ -512,7 +512,8 @@ html.no-js .rv { opacity: 1; transform: none; }
 .case-diagram .d-label { fill: var(--ink); font-family: var(--mono); font-size: 12px; text-anchor: middle; }
 .case-diagram .d-sub { fill: var(--muted); font-family: var(--mono); font-size: 9.5px; text-anchor: middle; }
 .case-diagram .d-line { stroke: var(--muted); stroke-width: 1.2; fill: none; }
-.case-diagram .d-dot { fill: var(--sand); }
+.case-diagram .d-dot { fill: var(--sand); filter: drop-shadow(0 0 4px var(--sand)); animation: dotPulse 2s ease-in-out infinite; }
+@keyframes dotPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 .case-diagram .d-title {
   fill: var(--muted);
   font-family: var(--mono);

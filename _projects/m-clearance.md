@@ -62,9 +62,11 @@ see the same state at the same time.
   <text class="d-label" x="660" y="124">Clearance record</text>
   <text class="d-sub" x="660" y="142">status + audit trail</text>
 
-  <path class="d-line d-flow" d="M180 75 H300" marker-end="url(#arrow-mc)"/>
+  <path class="d-line" d="M180 75 H300" marker-end="url(#arrow-mc)"/>
   <path class="d-line" d="M180 185 H300" marker-end="url(#arrow-mc)"/>
   <path class="d-line" d="M480 130 H580" marker-end="url(#arrow-mc)"/>
+  <!-- composite flow: Applicant → Firebase → Clearance -->
+  <path class="d-flow" d="M180 75 H390 V130 H580 V130 H660" fill="none" stroke="none"/>
   <circle class="d-dot" cx="180" cy="75" r="5"/>
 </svg>
 </div>

@@ -64,10 +64,12 @@ of a folder of PDFs.
   <text class="d-sub" x="385" y="214">PDF / scan</text>
 
   <path class="d-line" d="M190 100 H300" marker-end="url(#arrow-ko)"/>
-  <path class="d-line d-flow" d="M385 170 V140" marker-end="url(#arrow-ko)"/>
+  <path class="d-line" d="M385 170 V140" marker-end="url(#arrow-ko)"/>
   <path class="d-line" d="M470 100 H580" marker-end="url(#arrow-ko)"/>
   <path class="d-line" d="M190 130 C 240 200, 250 200, 300 200" marker-end="url(#arrow-ko)"/>
-  <circle class="d-dot" cx="385" cy="170" r="5"/>
+  <!-- composite flow: SPA → Gemini → Firestore -->
+  <path class="d-flow" d="M190 100 H385 V100 H580" fill="none" stroke="none"/>
+  <circle class="d-dot" cx="190" cy="100" r="5"/>
 </svg>
 </div>
 

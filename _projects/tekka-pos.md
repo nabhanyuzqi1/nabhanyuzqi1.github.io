@@ -58,11 +58,13 @@ Onboarding a new cafe is configuration, not a project.
   <text class="d-label" x="660" y="166">Reports</text>
   <text class="d-sub" x="660" y="184">daily sales recap</text>
 
-  <path class="d-line d-flow" d="M150 55 C 210 55, 210 90, 270 100" marker-end="url(#arrow-tp)"/>
+  <path class="d-line" d="M150 55 C 210 55, 210 90, 270 100" marker-end="url(#arrow-tp)"/>
   <path class="d-line" d="M150 125 H270" marker-end="url(#arrow-tp)"/>
   <path class="d-line" d="M150 195 C 210 195, 210 160, 270 150" marker-end="url(#arrow-tp)"/>
   <path class="d-line" d="M470 95 H580" marker-end="url(#arrow-tp)"/>
   <path class="d-line" d="M470 160 H580" marker-end="url(#arrow-tp)"/>
+  <!-- composite flow: Cafe → Tekka OS → Tenant data -->
+  <path class="d-flow" d="M150 55 C 210 55, 210 90, 270 100 L370 125 H470 V95 H660" fill="none" stroke="none"/>
   <circle class="d-dot" cx="150" cy="55" r="5"/>
 </svg>
 </div>

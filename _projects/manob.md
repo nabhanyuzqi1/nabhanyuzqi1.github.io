@@ -58,9 +58,11 @@ course content and business logic are written once and shared across platforms.
   <text class="d-sub" x="670" y="138">one identity across</text>
   <text class="d-sub" x="670" y="154">web + mobile</text>
 
-  <path class="d-line d-flow" d="M200 75 C 260 75, 270 105, 330 115" marker-end="url(#arrow-mb)"/>
+  <path class="d-line" d="M200 75 C 260 75, 270 105, 330 115" marker-end="url(#arrow-mb)"/>
   <path class="d-line" d="M200 175 C 260 175, 270 150, 330 145" marker-end="url(#arrow-mb)"/>
   <path class="d-line" d="M510 130 H600" marker-end="url(#arrow-mb)"/>
+  <!-- composite flow: Web → Firebase → Brand -->
+  <path class="d-flow" d="M200 75 C 260 75, 270 105, 330 115 L420 130 H600 H670" fill="none" stroke="none"/>
   <circle class="d-dot" cx="200" cy="75" r="5"/>
 </svg>
 </div>

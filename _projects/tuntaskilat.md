@@ -83,11 +83,13 @@ apps; Admin runs as Flutter Web from the office.
   <text class="d-sub" x="665" y="228">harga × qty revalidated</text>
   <text class="d-sub" x="665" y="244">client never trusted</text>
 
-  <path class="d-line d-flow" d="M170 78 H330" marker-end="url(#arrow-tk)"/>
+  <path class="d-line" d="M170 78 H330" marker-end="url(#arrow-tk)"/>
   <path class="d-line" d="M170 158 H330" marker-end="url(#arrow-tk)"/>
   <path class="d-line" d="M170 238 H330" marker-end="url(#arrow-tk)"/>
   <path class="d-line" d="M510 95 H590" marker-end="url(#arrow-tk)"/>
   <path class="d-line" d="M510 221 H590" marker-end="url(#arrow-tk)"/>
+  <!-- composite flow: Customer → Firebase → Guarantee -->
+  <path class="d-flow" d="M170 78 H420 V95 H590 V95 H665" fill="none" stroke="none"/>
   <circle class="d-dot" cx="170" cy="78" r="5"/>
 </svg>
 </div>

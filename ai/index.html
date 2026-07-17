@@ -1,0 +1,55 @@
+---
+layout: default
+title: AI Lab — Nabhan Yuzqi
+description: >-
+  Interactive 3D neural network visualization — explore Nabhan Yuzqi's projects,
+  skills, AI/ML work, and Web3 learning journey through an explorable graph.
+---
+<div class="ai-page" id="ai-lab">
+  <canvas class="ai-canvas" data-neural-gl aria-hidden="true"></canvas>
+
+  <header class="ai-header">
+    <div class="wrap">
+      <p class="ai-header__kicker mono">Interactive simulation</p>
+      <h1 class="ai-header__title">Neural<br><span>Network</span></h1>
+      <p class="ai-header__sub">
+        An explorable 3D graph of my <b>skills</b>, <b>projects</b>, and
+        <b>learning frontiers</b> — mapped as a neural network. Each node
+        carries real information. Click any node to explore.
+      </p>
+    </div>
+  </header>
+
+  <!-- Legend -->
+  <div class="ai-legend" aria-label="Legend">
+    <div class="ai-legend__item">
+      <span class="ai-legend__dot ai-legend__dot--input"></span>
+      <span class="mono">Input — Background</span>
+    </div>
+    <div class="ai-legend__item">
+      <span class="ai-legend__dot ai-legend__dot--hidden"></span>
+      <span class="mono">Hidden — Skills & Projects</span>
+    </div>
+    <div class="ai-legend__item">
+      <span class="ai-legend__dot ai-legend__dot--output"></span>
+      <span class="mono">Output — What I Ship</span>
+    </div>
+  </div>
+
+  <!-- Node detail card -->
+  <div class="ai-card" data-ai-card>
+    <span class="ai-card__layer mono" data-card-layer></span>
+    <h3 class="ai-card__title" data-card-title></h3>
+    <p class="ai-card__desc" data-card-desc></p>
+    <div class="ai-card__tags" data-card-tags></div>
+    <a class="ai-card__link" data-card-link href="#" target="_blank" rel="noopener">View project ↗</a>
+  </div>
+
+  <!-- Interaction hint -->
+  <div class="ai-hint" data-ai-hint>
+    <span class="mono">Click or hover any node to explore</span>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{{ '/assets/css/neural.css' | relative_url }}">
+<script type="module" src="{{ '/assets/js/neural-net.js' | relative_url }}"></script>
