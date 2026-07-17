@@ -22,7 +22,7 @@
 
 /* ---------- base ---------- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -45,7 +45,7 @@ img, svg, video { display: block; max-width: 100%; height: auto; }
 }
 :focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; border-radius: 3px; }
 
-section { padding: clamp(64px, 9vw, 110px) 0; }
+section { padding: clamp(64px, 9vw, 110px) 0; scroll-snap-align: start; }
 .sec-head {
   display: flex;
   justify-content: space-between;
@@ -107,6 +107,7 @@ html.no-js .rv { opacity: 1; transform: none; }
   padding: 110px 0 clamp(28px, 5vh, 56px);
   position: relative;
   overflow: clip; /* parallaxed children must never bleed over the marquee */
+  scroll-snap-align: start;
 }
 .hero::before {
   content: "";
@@ -207,6 +208,7 @@ html.no-js .rv { opacity: 1; transform: none; }
   overflow: hidden;
   padding: 16px 0;
   background: var(--surface);
+  scroll-snap-align: none;
 }
 .marquee__track {
   display: flex;
@@ -285,15 +287,7 @@ html.no-js .rv { opacity: 1; transform: none; }
   color: var(--ink);
 }
 
-/* ---------- work orbit band ---------- */
-.work-orbit {
-  height: clamp(300px, 46vh, 460px);
-  margin: 8px 0 24px;
-  overflow: clip;
-}
-.work-orbit canvas { width: 100%; height: 100%; display: block; }
-html.no-js .work-orbit { display: none; }
-@media (prefers-reduced-motion: reduce) { .work-orbit { display: none; } }
+/* ---------- work orbit band (removed) ---------- */
 
 /* ---------- work index ---------- */
 .row {
@@ -353,14 +347,15 @@ html.no-js .work-orbit { display: none; }
 .row__ext .mono { color: inherit; }
 .row__ext:hover { text-decoration: underline; text-underline-offset: 4px; }
 
-/* hover preview floater (desktop, fine pointer only) */
+/* hover preview floater (desktop, fine pointer only) — anchored to right side
+   so it never overlaps row links, buttons, or the mouse cursor */
 .preview { display: none; }
 @media (hover: hover) and (pointer: fine) {
   html.js .preview {
     display: block;
     position: fixed;
     z-index: 40;
-    width: 340px;
+    width: 300px;
     aspect-ratio: 16 / 10;
     border-radius: 10px;
     overflow: hidden;
@@ -422,6 +417,7 @@ html.no-js .work-orbit { display: none; }
   border-top: 1px solid var(--line);
   position: relative;
   overflow: hidden;
+  scroll-snap-align: start;
 }
 .footer::before {
   content: "";

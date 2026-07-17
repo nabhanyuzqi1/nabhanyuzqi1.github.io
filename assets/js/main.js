@@ -48,13 +48,22 @@
   var preview = document.querySelector('[data-preview]');
   if (preview && FINE && !REDUCED) {
     var pimg = preview.querySelector('img');
-    var px = 0, py = 0, tx = 0, ty = 0, raf = null;
+    var py = 0, ty = 0, raf = null;
+    /* anchor X to the right edge of the viewport, leaving a margin */
+    var anchorX = function () {
+      var pw = 300; /* must match CSS width */
+      var margin = 28;
+      preview.style.left = (window.innerWidth - pw - margin) + 'px';
+    };
+    anchorX();
+    window.addEventListener('resize', anchorX);
+
     var loop = function () {
-      px += (tx - px) * 0.18;
       py += (ty - py) * 0.18;
-      preview.style.transform = 'translate(' + px + 'px,' + py + 'px)' +
-        (preview.classList.contains('is-on') ? '' : ' scale(.94)');
-      raf = (Math.abs(tx - px) > 0.5 || Math.abs(ty - py) > 0.5 || preview.classList.contains('is-on'))
+      preview.style.top = py + 'px';
+      preview.style.transform =
+        preview.classList.contains('is-on') ? 'none' : 'scale(.94)';
+      raf = (Math.abs(ty - py) > 0.5 || preview.classList.contains('is-on'))
         ? requestAnimationFrame(loop) : null;
     };
     document.querySelectorAll('[data-row]').forEach(function (row) {
@@ -67,12 +76,11 @@
       });
       row.addEventListener('pointerleave', function () { preview.classList.remove('is-on'); });
       row.addEventListener('pointermove', function (e) {
-        tx = Math.min(e.clientX + 24, window.innerWidth - 364);
-        ty = Math.min(e.clientY - 100, window.innerHeight - 240);
+        /* vertical: centre the preview on cursor Y, but clamp to viewport */
+        var previewH = 300 * 10 / 16; /* width * aspect ratio (10/16) */
+        ty = Math.max(8, Math.min(e.clientY - previewH / 2, window.innerHeight - previewH - 8));
       });
     });
-    preview.style.left = '0';
-    preview.style.top = '0';
   }
 
   /* ---------- Sampit route board: draw routes with scroll progress ---------- */
