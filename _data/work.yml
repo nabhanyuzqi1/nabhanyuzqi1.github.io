@@ -33,6 +33,12 @@ items:
     url: https://www.isuindonesia.id
     url_label: Live
     img: /assets/img/sites/isu-indonesia.jpg
+  - name: Cellution Balakosa
+    desc: Booking site for a smartphone repair shop in Sampit — services, social proof (5.0★ Google, 500+ repairs), WhatsApp booking flow.
+    tags: [Local Business, React × Framer Motion]
+    url: https://cellution-balakosa.vercel.app
+    url_label: Live
+    img: /assets/img/sites/cellution-balakosa.jpg
   - name: Manob Production
     desc: Creative studio site spanning four divisions — Record, Pictures, Design, Academy.
     tags: [Creative Studio]
